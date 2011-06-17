@@ -1,6 +1,6 @@
 <?php
 /**
- * An extension memberprofiles module for ClickBank members
+ * An extension for memberprofiles module for ClickBank members
  * 
  * @package		silverstripe-clickbank
  * @subpackage	extensions
