@@ -13,6 +13,7 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 			'db' => array (
 				'ClickBankPageTitle'   => 'Varchar(255)',
 				'ClickBankPageContent' => 'HTMLText',
+				'ClickBankEnableProfile' => 'Boolean'
 			)
 		);
 	}
@@ -26,6 +27,7 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 		$fields->addFieldToTab('Root.Content.ClickBank', new TextField('ClickBankPageTitle', 'Title'));
 		$fields->addFieldToTab('Root.Content.ClickBank', new HtmlEditorField('ClickBankPageContent', 'Content'));
 		$fields->addFieldToTab('Root.Content.ClickBank', new LabelField('ReplacementTextHeader', 'Replacements: $CBReceipt = Last ClickBank transaction receipt'));
+		$fields->addFieldToTab('Root.Content.ClickBank', new CheckboxField('ClickBankEnableProfile', 'Enable ClickBank Profile Page'));
 		
 		return $fields;
 	}
@@ -36,36 +38,10 @@ class MemberProfilePageExtension extends DataObjectDecorator {
  */
 class MemberProfilePageExtension_Controller extends Extension {
 	public static $allowed_actions = array (
-		'ClickBankContent',
-		'download'
+		'download',
+		'clickbankProfile',
+		'ClickBankProfileForm'
 	);
-
-	/**
-	 * Displays clickbank page in memberprofiles tab
-	 * 
-	 * @param	none
-	 * @return	object	arraydata
-	 */
-	public function ClickBankContent() {
-		$member = Member::currentUser();
-		if ($member && (Permission::check('ADMIN') || $member->ClickBankAccountType != 'None')) {
-			$name = "{$member->FirstName} {$member->Surname}";
-			$title = $this->owner->ClickBankPageTitle;
-			$content = $this->owner->ClickBankPageContent;
-			
-			$memberLastTransactionReceipt = $member->ClickBankProfile()->LastTransactionReceipt;
-			$content = str_replace('$CBReceipt', $memberLastTransactionReceipt, $content);
-			
-			return new ArrayData (
-				array (
-					'Title' => $title,
-					'Content' => $content,
-					'Name' => $name
-				)
-			);
-		}
-		return false;
-	}
 	
 	/**
 	 * Sends download request to registered members
@@ -83,5 +59,91 @@ class MemberProfilePageExtension_Controller extends Extension {
 			}
 		}
 		return ErrorPage::response_for(404);
+	}
+	
+	/**
+	 * Display ClickBank profile.
+	 * 
+	 * @see		MemberProfilePage_Controller::indexProfile()
+	 * @param	none
+	 * @return	mixed
+	 */
+	public function clickbankProfile() {
+		if (!$this->owner->AllowProfileEditing) {
+			return Security::permissionFailure($this->owner, _t(
+				'MemberProfiles.CANNOTEDIT',
+				'You cannot edit your profile via this page.'
+			));
+		}
+		
+		$member = Member::currentUser();
+		
+		foreach($this->owner->Groups() as $group) {
+			if(!$member->inGroup($group)) {
+				return Security::permissionFailure($this->owner);
+			}
+		}
+		
+		$data = array (
+			'Title' => $this->owner->obj('ClickBankPageTitle'),
+			'Content' => $this->owner->obj('ClickBankPageContent')
+		);
+		
+		return $this->owner->customise($data)->renderWith(array('ClickBankMemberProfilePage', 'Page'));
+	}
+	
+	/**
+	 * Displays ClickBank profile
+	 * 
+	 * @todo	Temp. readonly mode
+	 * @param	none
+	 * @return	Object	Form
+	 */
+	public function ClickBankProfileForm() {
+		$member = Member::currentUser();
+		$clickBankProfile = $member->ClickBankProfile(); 
+		
+		// address
+		$ccustaddr1 = new ReadonlyField('ccustaddr1', 'Address 1', $clickBankProfile->ccustaddr1);
+		$ccustaddr2 = new ReadonlyField('ccustaddr2', 'Address 2', $clickBankProfile->ccustaddr2);
+		$ccustcity = new ReadonlyField('ccustcity', 'City', $clickBankProfile->ccustcity);
+		$ccustcounty = new ReadonlyField('ccustcounty', 'County', $clickBankProfile->ccustcounty);
+		$ccuststate = new ReadonlyField('ccuststate', 'State', $clickBankProfile->ccuststate);
+		$ccustzip = new ReadonlyField('ccustzip', 'Zip Code', $clickBankProfile->ccustzip);
+		$ccustcc = new ReadonlyField('ccustcc', 'Country', $clickBankProfile->ccustcc);
+		 
+		// shipping address
+		$ccustshippingstate = new ReadonlyField('ccustshippingstate', 'Shipping State', $clickBankProfile->ccustshippingstate);
+		$ccustshippingzip = new ReadonlyField('ccustshippingzip', 'Shipping Zip Code', $clickBankProfile->ccustshippingzip);
+		$ccustshippingcountry = new ReadonlyField('ccustshippingcountry', 'Shipping Country', $clickBankProfile->ccustshippingcountry);
+		
+		$fields = new FieldSet(
+			new HeaderField('AddressHeader', 'Address'),
+			$ccuststate,
+			$ccustzip,
+			$ccustcc,
+			
+			new HeaderField('ShippingAddressHeader', 'Shipping Address'),
+			$ccustshippingstate,
+			$ccustshippingzip,
+			$ccustshippingcountry,
+			
+			new LiteralField('', '<br />')
+		);
+		
+		$actions = new FieldSet(
+			new FormAction('doClickBankProfileForm', 'Return Main')
+		);
+		
+		return new Form($this->owner, 'ClickBankProfileForm', $fields, $actions);
+	}
+	
+	/**
+	 * Updates an existing ClickBank Member's profile.
+	 *
+	 * @todo	temp. redirect to main member's profile page.
+	 */
+	public function doClickBankProfileForm() {
+		return Director::redirect($this->owner->Link());
 	}
 }
