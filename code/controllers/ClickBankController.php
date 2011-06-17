@@ -11,6 +11,7 @@ class ClickBank_Controller extends Controller {
 	static $url_handlers = array (
 		'' => 'index',
 		'ipn!' => 'ipn',
+		'download/$Filename!' => 'download'
 	);
 	
 	function index(SS_HTTPRequest $request) {
@@ -32,4 +33,22 @@ class ClickBank_Controller extends Controller {
 		}
 		return ErrorPage::response_for(404); 		
 	}
+	
+	/**
+	 * Sends download request to registered members
+	 * 	
+	 * @param	object	GET 'filename' request 
+	 * @return	object	HTTP request
+	 */
+	public function download(SS_HTTPRequest $request) {
+		$filename = $request->param('Filename');
+		if (Member::currentUserID() && $request->isGET() && !empty($filename)) {
+			$file = DB::query("SELECT Filename FROM File  WHERE Name = '" . Convert::raw2sql($filename) . "'")->value();
+			if (!empty($file) && Director::fileExists($file)) {
+				$file_contents = file_get_contents(Director::getAbsFile($file));
+				return SS_HTTPRequest::send_file($file_contents, $filename);
+			}
+		}
+		return Security::permissionFailure($this);
+	}	
 }

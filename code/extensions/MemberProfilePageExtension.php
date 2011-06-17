@@ -44,24 +44,6 @@ class MemberProfilePageExtension_Controller extends Extension {
 	);
 	
 	/**
-	 * Sends download request to registered members
-	 * 	
-	 * @param	object	GET 'filename' request 
-	 * @return	object	HTTP request
-	 */
-	public function download(SS_HTTPRequest $request) {
-		$name = $request->getVar('filename');
-		if (Member::currentUserID() && $request->isGET() && !empty($name)) {
-			$filename = DB::query("SELECT Filename FROM File  WHERE Name = '" . Convert::raw2sql($name) . "'")->value();
-			if (!empty($filename) && Director::fileExists($filename)) {
-				$file_contents = file_get_contents(Director::getAbsFile($filename));
-				return SS_HTTPRequest::send_file($file_contents, $name);
-			}
-		}
-		return ErrorPage::response_for(404);
-	}
-	
-	/**
 	 * Display ClickBank profile.
 	 * 
 	 * @see		MemberProfilePage_Controller::indexProfile()
