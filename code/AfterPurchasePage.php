@@ -49,9 +49,10 @@ class AfterPurchasePage_Controller extends Page_Controller {
 				if (!empty($cbreceipt) && !empty($cbpop)) {
 					if (ClickBank::validate_afterpurchase_request($request->getVars())) {
 						
-						// make the member status to logged-in
 						$member = DataObject::get_one('Member', "Email = '{$email}'");
-						if ($member) {
+						
+						// make the member status to logged-in
+						if ($member && $this->loginAfterClickBankRequestIsValid) {
 							$member->logIn();
 						}
 						
