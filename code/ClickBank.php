@@ -13,12 +13,24 @@ class ClickBank {
 	 */
 	public static function enable() {
 		DataObject::add_extension('SiteConfig', 'ClickBankSiteConfig');
-		DataObject::add_extension('MemberProfilePage', 'MemberProfilePageExtension');
-		DataObject::add_extension('MemberProfilePage_Controller', 'MemberProfilePageExtension_Controller');
-		DataObject::add_extension('Member', 'ClickBankMemberProfileExtension');
+		if (class_exists('MemberProfileExtension')) {		
+			DataObject::add_extension('MemberProfilePage', 'MemberProfilePageExtension');
+			DataObject::add_extension('MemberProfilePage_Controller', 'MemberProfilePageExtension_Controller');
+			DataObject::add_extension('Member', 'ClickBankMemberProfileExtension');
+		}
 	}
 	
-	public static function set_cb_id(){
+	/**
+	 * Check that the required modules are installed.
+	 * 
+	 * @param	none
+	 * @return	boolean		true/false
+	 */
+	public static function validate_required_modules() {
+		if (class_exists('MemberProfileExtension')) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
