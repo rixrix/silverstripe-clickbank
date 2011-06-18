@@ -18,10 +18,10 @@ class AfterPurchasePage extends Page {
 	
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
-		$fields->addFieldToTab('Root.Content.Main', new LabelField('ReplacementTextHeader', 'Replacements: $CBReceipt = ClickBank Receipt, $CBName = ClickBank Member Name'));
-		$fields->addFieldToTab('Root.Content.Main', new CheckboxField('validateClickBankRequest', 'Validate ClickBank Request ?'));
-		$fields->addFieldToTab('Root.Content.Main', new CheckboxField('loginAfterClickBankRequestIsValid', 'Login member after ClickBank Validation ?'));
-		$fields->addFieldToTab('Root.Content.Main', new LabelField('loginAfterClickBankRequestIsValidHelp', "NOTE: You need to tick 'Validate ClickBank Request' if you want to login the user after validation"));
+		$fields->addFieldToTab('Root.Content.Main', new LabelField('ReplacementTextLabel', _t('ClickBank.APP_REPLACEMENT_LABEL')));
+		$fields->addFieldToTab('Root.Content.Main', new CheckboxField('validateClickBankRequest', _t('ClickBank.APP_VALIDATE_REQUEST')));
+		$fields->addFieldToTab('Root.Content.Main', new CheckboxField('loginAfterClickBankRequestIsValid', _t('ClickBank.APP_LOGIN_AFTER_VALIDATION')));
+		$fields->addFieldToTab('Root.Content.Main', new LabelField('loginAfterClickBankRequestIsValidHelpLabel', _t('ClickBank.APP_LOGIN_AFTER_VALIDATION_LABEL')));
 
 		return $fields;
 	}

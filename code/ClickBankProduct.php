@@ -39,9 +39,9 @@ class ClickBankProduct extends Page {
 	
 	public function getCMSFields() {
 		$field = parent::getCMSFields();
-		$field->addFieldToTab('Root.Content.Main', new LiteralField('CBSettings', '<h2>ClickBank Details</h2>'));
-		$field->addFieldToTab('Root.Content.Main', new CheckboxField('RedirectToClickBank', 'Redirect To ClickBank'));
-		$field->addFieldToTab('Root.Content.Main', new TextField('ProductID', 'ClickBank Product ID'));
+		$field->addFieldToTab('Root.Content.Main', new LiteralField('CBSettings', _t('ClickBank.PP_SETTINGS_SECTION_TITLE')));
+		$field->addFieldToTab('Root.Content.Main', new CheckboxField('RedirectToClickBank', _t('ClickBank.PP_REDIRECT_TO_CLICKBANK')));
+		$field->addFieldToTab('Root.Content.Main', new TextField('ProductID', _t('ClickBank.PP_CLICKBANK_PRODUCT_ID')));
 		
 		$cb_product_url = '';
 		$cb_product_alias = '';
@@ -50,8 +50,8 @@ class ClickBankProduct extends Page {
 			$cb_product_alias = Director::absoluteURL($this->Link());	
 		}
 		
-		$field->addFieldToTab('Root.Content.Main', new ReadonlyField('ClickBankURIAlias', 'Product URL Alias', $cb_product_alias));
-		$field->addFieldToTab('Root.Content.Main', new ReadonlyField('ClickBankURI', 'ClickBank Product URL', $cb_product_url));
+		$field->addFieldToTab('Root.Content.Main', new ReadonlyField('ClickBankURIAlias', _t('ClickBank.PP_PRODUCT_URL_ALIAS'), $cb_product_alias));
+		$field->addFieldToTab('Root.Content.Main', new ReadonlyField('ClickBankURI', _t('ClickBank.PP_CLICKBANK_PRODUCT_URL_ALIAS'), $cb_product_url));
 		
 		return $field;
 	}

@@ -86,26 +86,26 @@ class MemberProfilePageExtension_Controller extends Extension {
 		$clickBankProfile = $member->ClickBankProfile(); 
 		
 		// address
-		$ccustaddr1 = new ReadonlyField('ccustaddr1', 'Address 1', $clickBankProfile->ccustaddr1);
-		$ccustaddr2 = new ReadonlyField('ccustaddr2', 'Address 2', $clickBankProfile->ccustaddr2);
-		$ccustcity = new ReadonlyField('ccustcity', 'City', $clickBankProfile->ccustcity);
-		$ccustcounty = new ReadonlyField('ccustcounty', 'County', $clickBankProfile->ccustcounty);
-		$ccuststate = new ReadonlyField('ccuststate', 'State', $clickBankProfile->ccuststate);
-		$ccustzip = new ReadonlyField('ccustzip', 'Zip Code', $clickBankProfile->ccustzip);
-		$ccustcc = new ReadonlyField('ccustcc', 'Country', $clickBankProfile->ccustcc);
+		$ccustaddr1 = new ReadonlyField('ccustaddr1', _t('ClickBank.PROFILE_ADDRESS_1'), $clickBankProfile->ccustaddr1);
+		$ccustaddr2 = new ReadonlyField('ccustaddr2', _t('ClickBank.PROFILE_ADDRESS_2'), $clickBankProfile->ccustaddr2);
+		$ccustcity = new ReadonlyField('ccustcity', _t('ClickBank.PROFILE_CITY'), $clickBankProfile->ccustcity);
+		$ccustcounty = new ReadonlyField('ccustcounty', _t('ClickBank.PROFILE_COUNTY'), $clickBankProfile->ccustcounty);
+		$ccuststate = new ReadonlyField('ccuststate', _t('ClickBank.PROFILE_STATE'), $clickBankProfile->ccuststate);
+		$ccustzip = new ReadonlyField('ccustzip', _t('ClickBank.PROFILE_ZIP'), $clickBankProfile->ccustzip);
+		$ccustcc = new ReadonlyField('ccustcc', _t('ClickBank.PROFILE_COUNTRY'), $clickBankProfile->ccustcc);
 		 
 		// shipping address
-		$ccustshippingstate = new ReadonlyField('ccustshippingstate', 'Shipping State', $clickBankProfile->ccustshippingstate);
-		$ccustshippingzip = new ReadonlyField('ccustshippingzip', 'Shipping Zip Code', $clickBankProfile->ccustshippingzip);
-		$ccustshippingcountry = new ReadonlyField('ccustshippingcountry', 'Shipping Country', $clickBankProfile->ccustshippingcountry);
+		$ccustshippingstate = new ReadonlyField('ccustshippingstate', _t('ClickBank.PROFILE_SHIPPING_STATE'), $clickBankProfile->ccustshippingstate);
+		$ccustshippingzip = new ReadonlyField('ccustshippingzip', _t('ClickBank.PROFILE_SHIPPING_ZIP'), $clickBankProfile->ccustshippingzip);
+		$ccustshippingcountry = new ReadonlyField('ccustshippingcountry', _t('ClickBank.PROFILE_SHIPPING_COUNTRY'), $clickBankProfile->ccustshippingcountry);
 		
 		$fields = new FieldSet(
-			new HeaderField('AddressHeader', 'Address'),
+			new HeaderField('AddressHeader', _t('ClickBank.ADDRESS_HEADER')),
 			$ccuststate,
 			$ccustzip,
 			$ccustcc,
 			
-			new HeaderField('ShippingAddressHeader', 'Shipping Address'),
+			new HeaderField('ShippingAddressHeader', _t('ClickBank.SHIPPING_ADDRESS_HEADER')),
 			$ccustshippingstate,
 			$ccustshippingzip,
 			$ccustshippingcountry,
@@ -114,7 +114,7 @@ class MemberProfilePageExtension_Controller extends Extension {
 		);
 		
 		$actions = new FieldSet(
-			new FormAction('doClickBankProfileForm', 'Return Main')
+			new FormAction('doClickBankProfileForm', _t('ClickBank.RETURN_MAIN_BUTTON'))
 		);
 		
 		return new Form($this->owner, 'ClickBankProfileForm', $fields, $actions);

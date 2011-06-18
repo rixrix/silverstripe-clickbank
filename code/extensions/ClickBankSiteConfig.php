@@ -14,7 +14,8 @@ class ClickBankSiteConfig extends DataObjectDecorator {
 				'ClickBankSecretKey'  => 'Varchar(255)',
 				'ClickBankApiKey'  => 'Varchar(255)',
 				'ClickBankDeveloperApiKey'  => 'Varchar(255)',
-				'ClickBankSkin' => 'Varchar(10)'
+				'ClickBankSkin' => 'Varchar(10)',
+				'ClickBankTestMode' => 'Boolean'
 			)
 		);
 	}
@@ -25,20 +26,29 @@ class ClickBankSiteConfig extends DataObjectDecorator {
 	 * @see DataObjectDecorator::updateCMSFields()
 	 */
 	function updateCMSFields(&$fields) {
-		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankIPN', '<h2>IPN Settings</h2>'));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankID', 'ClickBank ID'));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankSecretKey', 'Secret Key'));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankSkin', 'ClickBank Skin ID'));
+		if (!ClickBank::validate_required_modules()) {
+			$fields->addFieldToTab("Root.ClickBank", new LiteralField("ClickBankWarningHeader", _t('ClickBank.MESSAGE_WARNINGMISSINGMODULE')));
+		}
+						
+		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankIPNTitle', _t('ClickBank.CONFIG_GENERAL_SETTINGS_SECTION_TITLE')));
+		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankID', _t('ClickBank.CONFIG_CLICKBANKID')));
+		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankSecretKey', _t('ClickBank.CONFIG_SECRETKEY')));
+		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankSkin', _t('ClickBank.CONFIG_SKINID')));
+		
 		$clickBankHolder = DataObject::get_one('ClickBankHolder');
 		$site_ipn_url = '';
 		if ($clickBankHolder) {
 			$site_ipn_url = Director::absoluteURL('/clickbank/ipn');
 		}
-		$ipn_textfield = new ReadonlyField('ClickBankIpnUrl', 'IPN URL', $site_ipn_url);
+		$ipn_textfield = new ReadonlyField('ClickBankIpnUrl', _t('ClickBank.CONFIG_IPN_URL'), $site_ipn_url);
 		$fields->addFieldToTab("Root.ClickBank", $ipn_textfield);
+		$fields->addFieldToTab("Root.ClickBank", new LabelField('IpnUrlLabel', _t('ClickBank.CONFIG_IPN_URL_LABEL')));
 		
-		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankAPI', '<h2>API Settings</h2>'));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankApiKey', 'API Key'));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankDeveloperApiKey', 'Developer API Key'));
+		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankAPI', _t('ClickBank.CONFIG_API_SECTION_TITLE')));
+		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankApiKey', _t('ClickBank.CONFIG_API_KEY')));
+		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankDeveloperApiKey', _t('ClickBank.CONFIG_API_DEVELOPER_KEY')));
+		
+		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankSiteMode', _t('ClickBank.CONFIG_SITE_MODE_SECTION_TITLE')));
+		$fields->addFieldToTab("Root.ClickBank", new CheckboxField('ClickBankTestMode', _t('ClickBank.CONFIG_SITE_MODE')));
 	}
 }
