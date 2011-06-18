@@ -1,6 +1,6 @@
 <?php
 /**
- * Member's extend ClickBank profile
+ * Member's extended ClickBank profile
  * 
  * @package		silverstripe-clickbank
  * @subpackage	dataobjects
@@ -20,6 +20,7 @@ class ClickBankMemberProfile extends DataObject {
 		'ccustshippingstate' => 'Varchar(2)',
 		'ccustshippingzip' => 'Varchar(255)',
 		'ccustshippingcountry' => 'Varchar(255)',
+	
 		'LastTransactionReceipt' => 'Varchar(20)',
 		'LastTransactionTime' => 'Varchar(10)',
 		'LastTransactionID' => 'Varchar(255)',
