@@ -36,7 +36,7 @@ class ClickBank_Controller extends Controller {
 	
 	/**
 	 * Sends download request to registered members
-	 * 	
+	 * 
 	 * @param	object	GET 'filename' request 
 	 * @return	object	HTTP request
 	 */
@@ -50,5 +50,5 @@ class ClickBank_Controller extends Controller {
 			}
 		}
 		return Security::permissionFailure($this);
-	}	
+	}
 }
