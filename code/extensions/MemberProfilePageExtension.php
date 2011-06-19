@@ -38,7 +38,6 @@ class MemberProfilePageExtension extends DataObjectDecorator {
  */
 class MemberProfilePageExtension_Controller extends Extension {
 	public static $allowed_actions = array (
-		'download',
 		'clickbankProfile',
 		'ClickBankProfileForm'
 	);
