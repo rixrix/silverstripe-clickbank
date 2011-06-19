@@ -26,6 +26,7 @@ class ClickBankSiteConfig extends DataObjectDecorator {
 	 * @see DataObjectDecorator::updateCMSFields()
 	 */
 	function updateCMSFields(&$fields) {
+		// Show warning message		
 		if (!ClickBank::validate_required_modules()) {
 			$fields->addFieldToTab("Root.ClickBank", new LiteralField("ClickBankWarningHeader", _t('ClickBank.MESSAGE_WARNINGMISSINGMODULE')));
 		}
@@ -44,11 +45,11 @@ class ClickBankSiteConfig extends DataObjectDecorator {
 		$fields->addFieldToTab("Root.ClickBank", $ipn_textfield);
 		$fields->addFieldToTab("Root.ClickBank", new LabelField('IpnUrlLabel', _t('ClickBank.CONFIG_IPN_URL_LABEL')));
 		
-		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankAPI', _t('ClickBank.CONFIG_API_SECTION_TITLE')));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankApiKey', _t('ClickBank.CONFIG_API_KEY')));
-		$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankDeveloperApiKey', _t('ClickBank.CONFIG_API_DEVELOPER_KEY')));
+		//$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankAPI', _t('ClickBank.CONFIG_API_SECTION_TITLE')));
+		//$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankApiKey', _t('ClickBank.CONFIG_API_KEY')));
+		//$fields->addFieldToTab("Root.ClickBank", new TextField('ClickBankDeveloperApiKey', _t('ClickBank.CONFIG_API_DEVELOPER_KEY')));
 		
-		$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankSiteMode', _t('ClickBank.CONFIG_SITE_MODE_SECTION_TITLE')));
-		$fields->addFieldToTab("Root.ClickBank", new CheckboxField('ClickBankTestMode', _t('ClickBank.CONFIG_SITE_MODE')));
+		//$fields->addFieldToTab("Root.ClickBank", new LiteralField('ClickBankSiteModeHeader', _t('ClickBank.CONFIG_SITE_MODE_SECTION_TITLE')));
+		//$fields->addFieldToTab("Root.ClickBank", new CheckboxField('ClickBankTestMode', _t('ClickBank.CONFIG_SITE_MODE')));
 	}
 }
