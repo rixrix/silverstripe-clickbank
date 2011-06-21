@@ -46,6 +46,9 @@ $lang['en_US']['ClickBank']['PP_CLICKBANK_PRODUCT_ID'] = 'ClickBank Product ID';
 $lang['en_US']['ClickBank']['PP_PRODUCT_URL_ALIAS'] = 'Product URL Alias';
 $lang['en_US']['ClickBank']['PP_CLICKBANK_PRODUCT_URL_ALIAS'] = 'ClickBank Product URL';
 
+// Product Holder (PH)
+$lang['en_US']['ClickBank']['PP_ITEM_PER_PAGE'] = 'Items to display per page';
+
 // IPN Log (IL)
 $lang['en_US']['ClickBank']['IL_CPRODITEM'] = 'Item #';
 $lang['en_US']['ClickBank']['IL_CPRODTITLE'] = 'Product Name';

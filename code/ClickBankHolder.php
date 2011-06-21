@@ -21,7 +21,7 @@ class ClickBankHolder extends Page {
 	
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
-		$fields->addFieldToTab('Root.Content.Main', new TextField('ItemsPerPage', 'Items Per Page'));
+		$fields->addFieldToTab('Root.Content.Main', new TextField('ItemsPerPage', _t('ClickBank.PP_ITEM_PER_PAGE')));
 		
 		return $fields;
 	}
