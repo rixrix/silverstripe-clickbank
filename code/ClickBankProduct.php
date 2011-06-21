@@ -55,6 +55,16 @@ class ClickBankProduct extends Page {
 		
 		return $field;
 	}
+	
+	/**
+	 * Flags required fields in the CMS admin
+	 * 
+	 * @param	none
+	 * @return	Object	Error message
+	 */
+	public function getCMSValidator() {
+		return new RequiredFields('ProductID');
+	}
 }
 
 class ClickBankProduct_Controller extends Page_Controller {
