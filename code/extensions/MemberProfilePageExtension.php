@@ -24,10 +24,10 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 	 * @return	Object	ClickBank Tab
 	 */
 	public function updateCMSFields($fields) {
-		$fields->addFieldToTab('Root.Content.ClickBank', new TextField('ClickBankPageTitle', 'Title'));
-		$fields->addFieldToTab('Root.Content.ClickBank', new HtmlEditorField('ClickBankPageContent', 'Content'));
-		$fields->addFieldToTab('Root.Content.ClickBank', new LabelField('ReplacementTextHeader', 'Replacements: $CBReceipt = Last ClickBank transaction receipt'));
-		$fields->addFieldToTab('Root.Content.ClickBank', new CheckboxField('ClickBankEnableProfile', 'Enable ClickBank Profile Page'));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new TextField('ClickBankPageTitle', 'Title'));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new HtmlEditorField('ClickBankPageContent', 'Content'));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new LabelField('ReplacementTextHeader', 'Replacements: $CBReceipt = Last ClickBank transaction receipt'));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new CheckboxField('ClickBankEnableProfile', 'Enable ClickBank Profile Page'));
 		
 		return $fields;
 	}
