@@ -37,7 +37,6 @@ Installation Instructions
 
 Todos
 ----- 
-* Product list page
 * Test cases
 * More documentation 
 * Admin report page
