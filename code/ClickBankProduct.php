@@ -12,6 +12,10 @@ class ClickBankProduct extends Page {
 		'RedirectToClickBank' => "Boolean"
 	);
 	
+	static $has_one = array (
+		'ProductImage' => 'Image'
+	);
+	
 	public static $defaults = array (
 		'RedirectToClickBank' => true,
 	);
@@ -53,6 +57,10 @@ class ClickBankProduct extends Page {
 		$field->addFieldToTab('Root.Content.Main', new ReadonlyField('ClickBankURIAlias', _t('ClickBank.PP_PRODUCT_URL_ALIAS'), $cb_product_alias));
 		$field->addFieldToTab('Root.Content.Main', new ReadonlyField('ClickBankURI', _t('ClickBank.PP_CLICKBANK_PRODUCT_URL_ALIAS'), $cb_product_url));
 		
+		// Product Image
+		$field->addFieldToTab('Root.Content.ProductImage', new ImageField('ProductImage'));
+		
+		
 		return $field;
 	}
 	
@@ -87,7 +95,7 @@ class ClickBankProduct_Controller extends Page_Controller {
 				'Content' => $this->Content
 			);
 			
-			return $this->customise($data)->renderWith(array('ClickBankProductPage' => 'Page')); 
+			return $this->customise($data)->renderWith(array('ClickBankProductPage', 'Page')); 
 		}	
 	}
 }
