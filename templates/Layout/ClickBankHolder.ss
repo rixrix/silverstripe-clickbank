@@ -1,3 +1,5 @@
+<% require css(clickbank/css/clickbank.css) %>
+
 <div class="typography">
 	<% if Menu(2) %>
 		<% include SideBar %>
@@ -13,20 +15,30 @@
 		$Content
 		
 		<% if ClickBankProducts %>
-			<ul id="SearchResults">
+			<ul id="product-list">
 				<% control ClickBankProducts %>
 					<li>
-						<% if MenuTitle %>
-							<h3><a href="$Link">$MenuTitle</a></h3>
-						<% else %>
-							<h3><a href="$Link">$Title</a></h3>
-						<% end_if %>
-						
-						<% if Content %>
-		          			$Content.LimitCharacters(200)
-				  		<% end_if %>
-				  		
-				  		<a class="readMoreLink" href="$Link" title="Read more" >Read more</a>
+						<div class="clickbank-product-item">
+							<% if ProductImage %>
+								<div class="clickbank-product-item-image">
+									$ProductImage.SetWidth(50)
+								</div>
+							<% end_if %>
+							<div class="clickbank-product-item-info">
+								<% if MenuTitle %>
+									<h3><a href="$Link">$MenuTitle</a></h3>
+								<% else %>
+									<h3><a href="$Link">$Title</a></h3>
+								<% end_if %>
+								
+								<% if Content %>
+				          			$Content.LimitCharacters(200)
+						  		<% end_if %>
+					  		
+					  			<a class="readMoreLink" href="$Link" title="Read more" >Read more</a>
+					  		</div> <!-- /.clickbank-product-item-info -->
+					  		<div class="clear"></div>
+				  		</div> <!-- /.clickbank-product-item -->
 					</li>
 				<% end_control %>
 			</ul>
@@ -35,7 +47,8 @@
 				You don't have any products.
 			</p>
 		<% end_if %>
-		
+		<div class="clear"></div>
+		<br />
 		<% if ClickBankProducts.MoreThanOnePage %>
 			<div id="PageNumbers">
 				<% if ClickBankProducts.NotFirstPage %>
