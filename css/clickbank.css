@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+/**
+ * Product List
+ */
+
+ul#product-list {
+	margin: 10px 0;
+}
+
+ul#product-list li {
+	font-size: 1em;
+	list-style: none outside none;
+	margin: 5px 0;
+}
+
+.clickbank-product-item {
+	padding: 10px;
+}
+
+.clickbank-product-item .clickbank-product-item-image {
+	float: left;
+	margin: 10px;
+	width: 50px;
+}
+
+.clickbank-product-item-info {
+	float: left;
+	width: 400px;	
+}
+
+/**
+ * Product Details
+ */
+.clickbank-product {
+	padding: 10px;
+}
+
+.clickbank-product .clickbank-product-image {
+	float: left;
+	margin: 10px;
+	width: 150px;
+}
