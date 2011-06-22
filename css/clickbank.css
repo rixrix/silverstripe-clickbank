@@ -41,3 +41,33 @@ ul#product-list li {
 	margin: 10px;
 	width: 150px;
 }
+
+/**
+ * Common Styles
+ */
+
+.button {
+    padding: 5px 10px;
+    display: inline;
+    border: 1px #bebebe solid;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.button:hover {
+    background-position: 0 -48px;
+}
+
+.button:active {
+    background-position: 0 top;
+    position: relative;
+    top: 1px;
+    padding: 6px 10px 4px;
+}
+
+.button.gray { 
+	background-color: #e3e3e3;
+}

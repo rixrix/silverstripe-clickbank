@@ -19,6 +19,9 @@
 			<div class="clickbank-product-details">
 				$Content
 			</div>
+			<div class="button-holder">
+				<a href="{$Link}buy" class="button gray">Buy Me</a>
+			</div>
 			<div class="clear"></div>
 		</div>
 		$Form

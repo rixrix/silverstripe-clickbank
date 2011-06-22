@@ -77,7 +77,8 @@ class ClickBankProduct extends Page {
 
 class ClickBankProduct_Controller extends Page_Controller {
 	static $allowed_actions = array(
-		'index'
+		'index',
+		'buy'
 	);
 	
 	/**
@@ -97,5 +98,15 @@ class ClickBankProduct_Controller extends Page_Controller {
 			
 			return $this->customise($data)->renderWith(array('ClickBankProductPage', 'Page')); 
 		}	
+	}
+	
+	/**
+	 * Send to ClickBank payment page
+	 * 
+	 * @param	none
+	 * @return	none
+	 */
+	public function buy() {
+		return Director::redirect($this->getClickBankURI());
 	}
 }
