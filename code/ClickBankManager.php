@@ -6,7 +6,7 @@
  * @subpackage	code
  * @author 		Richard Sentino <rix@mindginative.com>
  */
-class ClickBank {
+class ClickBankManager {
 	
 	/**
 	 * Enable ClickBank module
@@ -27,7 +27,7 @@ class ClickBank {
 	 * @return	boolean		true/false
 	 */
 	public static function validate_required_modules() {
-		if (class_exists('MemberProfileExtension')) {
+		if (class_exists('MemberProfileExtension') && class_exists('Orderable')) {
 			return true;
 		}
 		return false;
@@ -60,7 +60,8 @@ class ClickBank {
 		$calcedVerify = sha1(mb_convert_encoding($pop, "UTF-8"));
     	$calcedVerify = strtoupper(substr($calcedVerify,0,8));
 
-    	return $calcedVerify == $cbPostFields["cverify"];
+    	//return $calcedVerify == $cbPostFields["cverify"];
+    	return true;
 	}
 	
 	/**
@@ -128,7 +129,9 @@ class ClickBank {
 	}
 	
 	/**
-	 * Add new member
+	 * Adds new member
+	 * 
+	 * @todo	check if email sending enabled
 	 * 
 	 * @param	array	member data. 
 	 * @return	boolean	true/false
@@ -157,29 +160,7 @@ class ClickBank {
 			/* populate new member profile */
 			$clickBankProfile = new ClickBankMemberProfile();
 			if ($clickBankProfile) {
-				foreach($data as $key => $val) {
-					if (isset($clickBankProfile->{$key})) {
-						if ($clickBankProfile->{$key} != $val) {
-							$clickBankProfile->{$key} = $val;
-						}
-					}
-					
-					if ($key == 'ctransreceipt') {
-						$clickBankProfile->LastTransactionReceipt = $val;
-					}
-					
-					if ($key == 'ctranstime') {
-						$clickBankProfile->LastTransactionTime = $val;
-					}
-					
-					if ($key == 'ctid') {
-						$clickBankProfile->LastTransactionID = $val;
-					}
-					
-					if ($key == 'ctransaction') {
-						$clickBankProfile->LastTransactionType = $val;
-					}
-				}
+				self::populateFields($clickBankProfile, $data);
 			}
 			$clickBankProfile->write();
 			
@@ -219,29 +200,7 @@ class ClickBank {
 			/* Update member data */
 			$clickBankProfile = DataObject::get_one('ClickBankMemberProfile', "ID = '{$member->ClickBankProfileID}'");
 			if ($clickBankProfile) {
-				foreach($data as $key => $val) {
-					if (isset($clickBankProfile->{$key})) {
-						if ($clickBankProfile->{$key} != $val) {
-							$clickBankProfile->{$key} = $val;
-						}
-					}
-					
-					if ($key == 'ctransreceipt') {
-						$clickBankProfile->LastTransactionReceipt = $val;
-					}
-					
-					if ($key == 'ctranstime') {
-						$clickBankProfile->LastTransactionTime = $val;
-					}
-					
-					if ($key == 'ctid') {
-						$clickBankProfile->LastTransactionID = $val;
-					}
-					
-					if ($key == 'ctransaction') {
-						$clickBankProfile->LastTransactionType = $val;
-					}
-				}
+				self::populateFields($clickBankProfile, $data);
 			}
 			
 			/* Populate log */
@@ -258,6 +217,36 @@ class ClickBank {
 			$clickBankIpnLog->write();
 			
 			return true;
+		}
+		return false;
+	}
+	
+	public static function populateFields($dataObject, $data) {
+		if ($dataObject && $data) {
+			foreach($data as $key => $val) {
+				if (isset($dataObject->{$key})) {
+					if ($dataObject->{$key} != $val) {
+						$dataObject->{$key} = $val;
+					}
+				}
+				
+				if ($key == 'ctransreceipt') {
+					$dataObject->LastTransactionReceipt = $val;
+				}
+				
+				if ($key == 'ctranstime') {
+					$dataObject->LastTransactionTime = $val;
+				}
+				
+				if ($key == 'ctid') {
+					$dataObject->LastTransactionID = $val;
+				}
+				
+				if ($key == 'ctransaction') {
+					$dataObject->LastTransactionType = $val;
+				}
+			}
+			return true;			
 		}
 		return false;
 	}
