@@ -47,7 +47,7 @@ class AfterPurchasePage_Controller extends Page_Controller {
 				$email = $request->getVar('cemail');
 				
 				if (!empty($cbreceipt) && !empty($cbpop)) {
-					if (ClickBank::validate_afterpurchase_request($request->getVars())) {
+					if (ClickBankManager::validate_afterpurchase_request($request->getVars())) {
 						
 						$member = DataObject::get_one('Member', "Email = '{$email}'");
 						

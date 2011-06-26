@@ -26,8 +26,8 @@ class ClickBank_Controller extends Controller {
 	 */
 	public function ipn(SS_HTTPRequest $request) {
 		if ($request->isPost()) {
-			if (ClickBank::validate_ipn_request($request->postVars())) {
-				ClickBank::process_ipn_request($request->postVars());
+			if (ClickBankManager::validate_ipn_request($request->postVars())) {
+				ClickBankManager::process_ipn_request($request->postVars());
 				return Director::get_status_code();
 			}
 		}

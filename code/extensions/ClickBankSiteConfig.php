@@ -27,7 +27,7 @@ class ClickBankSiteConfig extends DataObjectDecorator {
 	 */
 	function updateCMSFields(&$fields) {
 		// Show warning message		
-		if (!ClickBank::validate_required_modules()) {
+		if (!ClickBankManager::validate_required_modules()) {
 			$fields->addFieldToTab("Root.ClickBank", new LiteralField("ClickBankWarningHeader", _t('ClickBank.MESSAGE_WARNINGMISSINGMODULE')));
 		}
 						
