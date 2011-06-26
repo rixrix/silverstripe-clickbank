@@ -60,8 +60,7 @@ class ClickBankManager {
 		$calcedVerify = sha1(mb_convert_encoding($pop, "UTF-8"));
     	$calcedVerify = strtoupper(substr($calcedVerify,0,8));
 
-    	//return $calcedVerify == $cbPostFields["cverify"];
-    	return true;
+    	return $calcedVerify == $cbPostFields["cverify"];
 	}
 	
 	/**
@@ -154,7 +153,13 @@ class ClickBankManager {
 			$profilePage = DataObject::get_one('MemberProfilePage');
 			$member->ProfilePageID = $profilePage->ID;
 			if ($profilePage->EmailType == 'Validation') {
+				$email = new MemberConfirmationEmail($member->ProfilePage(), $member);
+				$email->send();
+				
 				$member->NeedsValidation = true;	
+			} elseif($profilePage->EmailType == 'Confirmation') {
+				$email = new MemberConfirmationEmail($member->ProfilePage(), $member);
+				$email->send();
 			}
 			
 			/* populate new member profile */
@@ -176,9 +181,6 @@ class ClickBankManager {
 				}
 			}
 			$clickBankIpnLog->write();
-			
-			$email = new MemberConfirmationEmail($member->ProfilePage(), $member);
-			$email->send();
 			
 			return true;
 		}
