@@ -143,11 +143,8 @@ class ClickBankManager {
 			$member->Surname = ucwords(strtolower($data['ccustlastname']));
 			$member->ClickBankAccountType = 'Paid';
 			
-			/* CORE BUG: password doesn't work at all */
 			$password = Member::create_new_password();
-			$security = Security::encrypt_password($password);
-			$member->Password = $security['password'];
-			$member->Salt = $security['salt'];
+			$member->Password = "$password";
 			
 			/* link to memberprofilepage module */
 			$profilePage = DataObject::get_one('MemberProfilePage');
