@@ -130,8 +130,6 @@ class ClickBankManager {
 	/**
 	 * Adds new member
 	 * 
-	 * @todo	check if email sending enabled
-	 * 
 	 * @param	array	member data. 
 	 * @return	boolean	true/false
 	 */
@@ -165,9 +163,17 @@ class ClickBankManager {
 				self::populateFields($clickBankProfile, $data);
 			}
 			$clickBankProfile->write();
-			
-			$member->ClickBankProfileID = $clickBankProfile->ID; 
+			$member->ClickBankProfileID = $clickBankProfile->ID;
+
+			// save new member
 			$member->write();
+
+			// assign & update new member to a group
+			$groupIds = $profilePage->getMemberProfileGroups();
+			if ($groupIds) {
+				$member->Groups()->setByIDList($groupIds);
+				$member->write();
+			}
 			
 			/* Populate log */
 			$clickBankIpnLog = new ClickBankIpnLog();

@@ -31,6 +31,25 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 		
 		return $fields;
 	}
+	
+	/**
+	 * Returns a list of groups available
+	 * 
+	 * @see		getSettableGroupIdsFrom
+	 * @param	none
+	 * @return	Array	of Groups IDs 
+	 */
+	public function getMemberProfileGroups() {
+		$groupIds = array();
+		$groups = $this->owner->Groups()->column('ID');
+		if (!empty($groups)) {
+			foreach ($groups as $groupId) {
+				$groupIds[] = $groupId;
+			}
+			return $groupIds;
+		}
+		return false;
+	}	
 }
 
 /**
