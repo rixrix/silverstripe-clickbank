@@ -14,6 +14,9 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 				'ClickBankPageTitle'   => 'Varchar(255)',
 				'ClickBankPageContent' => 'HTMLText',
 				'ClickBankEnableProfile' => 'Boolean'
+			),
+			'many_many' => array (
+				'ClickBankGroups' => 'Group'
 			)
 		);
 	}
@@ -23,21 +26,26 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 	 * 
 	 * @return	Object	ClickBank Tab
 	 */
-	public function updateCMSFields($fields) {
-		$fields->addFieldToTab('Root.Content.ClickBankProfile', new TextField('ClickBankPageTitle', 'Title'));
-		$fields->addFieldToTab('Root.Content.ClickBankProfile', new HtmlEditorField('ClickBankPageContent', 'Content'));
-		$fields->addFieldToTab('Root.Content.ClickBankProfile', new LabelField('ReplacementTextHeader', 'Replacements: $CBReceipt = Last ClickBank transaction receipt'));
-		$fields->addFieldToTab('Root.Content.ClickBankProfile', new CheckboxField('ClickBankEnableProfile', 'Enable ClickBank Profile Page'));
-		
-		return $fields;
+	public function updateCMSFields(FieldSet &$fields) {
+		// profile page
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new TextField('ClickBankPageTitle', _t('ClickBank.PROFILE_CMS_PROFILE_TITLE', 'Title')));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new HtmlEditorField('ClickBankPageContent', _t('ClickBank.PROFILE_CMS_PROFILE_CONTENT','Content')));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new LabelField('ReplacementTextHeader', _t('ClickBank.PROFILE_CMS_PROFILE_REPLACEMENTS_HEADER', 'Replacements: $CBReceipt = Last ClickBank transaction receipt')));
+		$fields->addFieldToTab('Root.Content.ClickBankProfile', new CheckboxField('ClickBankEnableProfile', _t('ClickBank.PROFILE_CMS_PROFILE_ENABLE', 'Enable ClickBank Profile Page')));
+
+		// clickbank groups
+		$fields->findOrMakeTab('Root.Profile.Groups');
+		$fields->addFieldToTab('Root.Profile.Groups', new HeaderField('ClickBankGroupsHeader', _t('ClickBank.PROFILE_CMS_CBGROUP_HEADER','ClickBank Group Assignment')));
+		$fields->addFieldToTab('Root.Profile.Groups', new LiteralField('ClickBankGroupsLiteralField', _t('ClickBank.PROFILE_CMS_CBGROUP_NOTE_LF', 'Any users buying the product through ClickBank will always be added to the groups below.')));
+		$fields->addFieldToTab('Root.Profile.Groups', new CheckboxSetField('ClickBankGroups', '', DataObject::get('Group')->map()));
 	}
 	
 	/**
-	 * Returns a list of groups available
+	 * Returns a list of groups available for regular members
 	 * 
-	 * @see		getSettableGroupIdsFrom
+	 * @see		MemberProfilePage_Controller::getSettableGroupIdsFrom
 	 * @param	none
-	 * @return	Array	of Groups IDs 
+	 * @return	Array	of Group IDs 
 	 */
 	public function getMemberProfileGroups() {
 		$groupIds = array();
@@ -49,7 +57,26 @@ class MemberProfilePageExtension extends DataObjectDecorator {
 			return $groupIds;
 		}
 		return false;
-	}	
+	}
+	
+	/**
+	 * Returns a list of groups available for ClickBank user group
+	 * 
+	 * @see		MemberProfilePage_Controller::getSettableGroupIdsFrom
+	 * @param	none
+	 * @return	Array	of group IDs 
+	 */	
+	public function getClickBankMemberGroups() {
+		$groupIds = array();
+		$groups = $this->owner->ClickBankGroups()->column('ID');
+		if (!empty($groups)) {
+			foreach ($groups as $groupId) {
+				$groupIds[] = $groupId;
+			}
+			return $groupIds;
+		}
+		return false;		
+	}
 }
 
 /**
