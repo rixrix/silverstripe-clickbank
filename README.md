@@ -33,7 +33,7 @@ Installation Instructions
 -------------------------
 1. Place the module in the root of your Silverstripe installation. Make sure the directory name is 'clickbank' 
 2. Visit yoursite.com/dev/build to rebuild the database.
-3. By default, the module is not enabled. To enable it, you need to add the following into your mysite/_config.php file : <code>ClickBank::enable();</code> 
+3. By default, the module is not enabled. To enable it, you need to add the following into your mysite/_config.php file : <code>ClickBankManager::enable();</code> 
 
 Todos
 ----- 
