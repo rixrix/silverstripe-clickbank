@@ -168,10 +168,17 @@ class ClickBankManager {
 			// save new member
 			$member->write();
 
-			// assign & update new member to a group
-			$groupIds = $profilePage->getMemberProfileGroups();
-			if ($groupIds) {
-				$member->Groups()->setByIDList($groupIds);
+			// assign & update new member to a ClickBank user group
+			$clickBankGroupIds = $profilePage->getClickBankMemberGroups();
+			if ($clickBankGroupIds) {
+				$member->Groups()->setByIDList($clickBankGroupIds);
+				$member->write();
+			}
+			
+			// assign & update new member to a regular memberprofile user group
+			$memberGroupIds = $profilePage->getMemberProfileGroups();
+			if ($memberGroupIds) {
+				$member->Groups()->setByIDList($memberGroupIds);
 				$member->write();
 			}
 			
