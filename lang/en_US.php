@@ -32,6 +32,13 @@ $lang['en_US']['ClickBank']['PROFILE_COUNTRY'] = 'Country';
 $lang['en_US']['ClickBank']['PROFILE_SHIPPING_STATE'] = 'Shipping State';
 $lang['en_US']['ClickBank']['PROFILE_SHIPPING_ZIP'] = 'Shipping Zip Code';
 $lang['en_US']['ClickBank']['PROFILE_SHIPPING_COUNTRY'] = 'Shipping Country';
+// Profile CMS
+$lang['en_US']['ClickBank']['PROFILE_CMS_PROFILE_TITLE'] = 'Title';
+$lang['en_US']['ClickBank']['PROFILE_CMS_PROFILE_CONTENT'] = 'Content';
+$lang['en_US']['ClickBank']['PROFILE_CMS_PROFILE_REPLACEMENTS_HEADER'] = 'Replacements: $CBReceipt = Last ClickBank transaction receipt';
+$lang['en_US']['ClickBank']['PROFILE_CMS_PROFILE_ENABLE'] = 'Enable ClickBank Profile Page';
+$lang['en_US']['ClickBank']['PROFILE_CMS_CBGROUP_HEADER'] = 'ClickBank Group Assignment';
+$lang['en_US']['ClickBank']['PROFILE_CMS_CBGROUP_NOTE_LF'] = 'Any users buying the product through ClickBank will always be added to the groups below.';
 
 // After Purchase Page (APP)
 $lang['en_US']['ClickBank']['APP_REPLACEMENT_LABEL'] = 'Replacements: $CBReceipt = ClickBank Receipt, $CBName = ClickBank Member Name';
