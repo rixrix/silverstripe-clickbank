@@ -1,4 +1,4 @@
-Copyright (c) 2011, Richard Sentino <rix@mindginative.com>
+Copyright (c) 2011, Richard Sentino <richard@mindginative.com>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
