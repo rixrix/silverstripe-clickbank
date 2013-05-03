@@ -3,7 +3,7 @@ Silverstripe ClickBank Module
 
 Maintainer Contacts
 -------------------
-*  Richard Sentino (<rix@mindginative.com>)
+*  Richard Sentino (<richard@mindginative.com>)
 
 Requirements
 ------------
